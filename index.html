@@ -91,10 +91,10 @@
 <script>
     function playSong(songUrl) {
         var audioPlayer = document.getElementById("audioPlayer");
-        var absSongUrl = "file:///Users/sadhanap/Desktop/spirit/static/SacredSoundwaves/"+songUrl
+        //var absSongUrl = "file:///Users/sadhanap/Desktop/spirit/static/SacredSoundwaves/"+songUrl
 
         // Check if the same audio is playing
-        if (!audioPlayer.paused && audioPlayer.src === absSongUrl) {
+        if (!audioPlayer.paused && audioPlayer.src === songUrl) {
             audioPlayer.pause();
             removePlayingClass();
         } else {
