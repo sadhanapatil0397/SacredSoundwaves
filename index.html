@@ -1,10 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Player with Play/Pause</title>
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            margin: 200px 0 0; /* Added top margin to prevent overlap with the header */
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            z-index: 200; /* Adjusted z-index to ensure it's displayed below other elements */
+        }
+        .image-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 20px;
+        }
+
+        .image-container.playing img {
+            filter: grayscale(100%); /* Apply greyscale effect to the playing image */
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .playPauseButton {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #333;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+
+
+    <header>
+        <h1>Sacred Soundwaves</h1>
+    </header>
+
+<!-- Image Containers with Play/Pause Button -->
+<div class="image-container">
+    <img src="images/meditation.jpg" alt="Image 1" onclick="playSong('audios/meditation1.mp3')">
+</div>
+
+<div class="image-container">
+    <img src="images/rainWater.jpg" alt="Image 2" onclick="playSong('audios/river.mp3')">
+</div>
+
+<div class="image-container">
+    <img src="images/study.jpg" alt="Image 1" onclick="playSong('audios/study.mp3')">
+</div>
+
+<div class="image-container">
+    <img src="images/sleep.jpg" alt="Image 2" onclick="playSong('audios/sleep.mp3')">
+</div>
+
+<!-- Add more image containers as needed -->
+
+<!-- Audio Container -->
+<div id="audioContainer">
+    <audio id="audioPlayer"></audio>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function playSong(songUrl) {
+        var audioPlayer = document.getElementById("audioPlayer");
+        var absSongUrl = "file:///Users/sadhanap/Desktop/spirit/static/SacredSoundwaves/"+songUrl
+
+        // Check if the same audio is playing
+        if (!audioPlayer.paused && audioPlayer.src === absSongUrl) {
+            audioPlayer.pause();
+            removePlayingClass();
+        } else {
+            audioPlayer.src = songUrl;
+            audioPlayer.play();
+            addPlayingClass();
+        }
+    }
+
+    function addPlayingClass() {
+        var playingImageContainer = document.querySelector('.image-container.playing');
+        if (playingImageContainer) {
+            playingImageContainer.classList.remove('playing');
+        }
+        var currentImageContainer = event.target.closest('.image-container');
+        if (currentImageContainer) {
+            currentImageContainer.classList.add('playing');
+        }
+    }
+
+    // Function to remove playing class from all image containers
+    function removePlayingClass() {
+        var playingImageContainers = document.querySelectorAll('.image-container.playing');
+        playingImageContainers.forEach(function (container) {
+            container.classList.remove('playing');
+        });
+    }
+</script>
+
 </body>
 </html>
